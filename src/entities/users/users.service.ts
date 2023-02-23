@@ -14,7 +14,7 @@ export class UsersService {
     }
 
     getUsers() {
-        return [... this.users];
+        return [...this.users];
     }
 
     getUser(id: string) {
@@ -29,7 +29,7 @@ export class UsersService {
         email: string
     ) {
         const [targetUser, index] = this.getUserById(id);
-        const nup = {... targetUser, name, age, surname, email };
+        const nup = {...targetUser, name, age, surname, email };
         const newUser = new User(id, nup.name, nup.age, nup.surname, nup.email);
         this.users[index] = newUser;
         return newUser;
@@ -37,12 +37,12 @@ export class UsersService {
 
     deleteUser(id: string) {
         const [,index] = this.getUserById(id);
-        this.users.findIndex(u => u.id = id);
+        this.users.findIndex(u => u.id === id);
         return [this.users[index], index];
     }
 
     private getUserById(id: string): [User, number] {
-        const index = this.users.findIndex(u => u.id = id);
+        const index = this.users.findIndex(u => u.id === id);
         return [this.users[index], index];
     }
 }

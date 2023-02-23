@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { User } from "./users.model";
 import { UsersService } from "./users.service";
 
 @Controller('users')
 export class UserController {
-    constructor (private readonly userService: UsersService) {}
+    constructor (private userService: UsersService) {}
 
     @Post()
     insertUser(
@@ -19,7 +20,7 @@ export class UserController {
     }
 
     @Get()
-    getAllUsers() {
+    async getAllUsers(): Promise<User[]> {
         return this.userService.getUsers();
     }
 
