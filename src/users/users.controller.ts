@@ -1,9 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "./users.service";
 
 @Controller('users')
 export class UserController {
-    constructor (private readonly userService: UsersService) {}
+    constructor (
+        private readonly userService: UsersService,
+        private jwtService: JwtService
+        ) {}
 
     @Post()
     insertUser(
@@ -13,9 +17,8 @@ export class UserController {
         @Body('email') email: string,
     ) {
         const userId = this.userService.insertUser(name, age, surname, email);
-        return {
-            id: userId,
-        };
+        const jwt = this.jwtService.sign({id: userId})
+        return jwt;
     }
 
     @Get()
